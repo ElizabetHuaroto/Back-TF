@@ -1,6 +1,7 @@
 package com.upc.estureview.controller;
 
 import com.upc.estureview.business.UserBusiness;
+import com.upc.estureview.dtos.LoginDTO;
 import com.upc.estureview.dtos.UserDTO;
 import com.upc.estureview.entitys.User;
 import org.modelmapper.ModelMapper;
@@ -15,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+//@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -56,6 +57,11 @@ public class UserController {
         }
         return convertToDto(user);
     }
+
+    @PostMapping("/login")
+    public LoginDTO ingreso(@RequestBody LoginDTO loginDTO){
+    return new LoginDTO();
+    }
     private UserDTO convertToDto(User user) {
         ModelMapper modelMapper = new ModelMapper();
         UserDTO userDTO = modelMapper.map(user, UserDTO.class);
@@ -73,5 +79,6 @@ public class UserController {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
 
 }

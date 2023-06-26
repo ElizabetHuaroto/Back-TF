@@ -2,6 +2,7 @@ package com.upc.estureview.entitys;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -11,7 +12,11 @@ public class User {
     private Long id;
     @Column(name = "nameUser", length = 60, nullable = false)
     private String nameUser;
-    private String typeUser;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> typeUser;
     @Column(name = "email",length = 35,nullable = false)
     private String email;
     private String password;
@@ -21,7 +26,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String nameUser, String typeUser, String email, String password, String districUser, int ageUser) {
+    public User(Long id, String nameUser, List<Role> typeUser, String email, String password, String districUser, int ageUser) {
         this.id = id;
         this.nameUser = nameUser;
         this.typeUser = typeUser;
@@ -29,6 +34,19 @@ public class User {
         this.password = password;
         this.districUser = districUser;
         this.ageUser = ageUser;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nameUser='" + nameUser + '\'' +
+                ", typeUser=" + typeUser +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", districUser='" + districUser + '\'' +
+                ", ageUser=" + ageUser +
+                '}';
     }
 
     public Long getId() {
@@ -47,11 +65,11 @@ public class User {
         this.nameUser = nameUser;
     }
 
-    public String getTypeUser() {
+    public List<Role> getTypeUser() {
         return typeUser;
     }
 
-    public void setTypeUser(String typeUser) {
+    public void setTypeUser(List<Role> typeUser) {
         this.typeUser = typeUser;
     }
 
@@ -85,18 +103,5 @@ public class User {
 
     public void setAgeUser(int ageUser) {
         this.ageUser = ageUser;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", nameUser='" + nameUser + '\'' +
-                ", typeUser='" + typeUser + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", districUser='" + districUser + '\'' +
-                ", ageUser=" + ageUser +
-                '}';
     }
 }

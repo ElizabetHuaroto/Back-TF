@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+//@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping("/api")
 public class SchoolController {
@@ -31,7 +31,7 @@ public class SchoolController {
         List<SchoolDTO> listDto = convertToLisDto(list);
         return new ResponseEntity<List<SchoolDTO>>(listDto, HttpStatus.OK);
     }
-    @GetMapping("/school/{nombre}")
+    @GetMapping("/schoola/{nombre}")
     public ResponseEntity<List<SchoolDTO>>  obtenerNombre(@PathVariable(value = "nombre") String nombre){
         List<School> list = business.findbyName(nombre);
         List<SchoolDTO> listDto = convertToLisDto(list);
